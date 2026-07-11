@@ -22,7 +22,7 @@ URL_PATTERN = re.compile(
     r"(youtube\.com|youtu\.be|instagram\.com|twitter\.com|x\.com|"
     r"facebook\.com|fb\.watch|tiktok\.com|linkedin\.com|snapchat\.com)"
     r"/(watch\?v=|embed/|v/|shorts/|reel/|p/|tv/|stories/|[\w-]+/status/|[\w-]+/video/|[\w-]+/reel/|[\w-]+/photo/|[\w-]+)?"
-    r"[\w&?=%-]+",
+    r"[\w&?=%@-]+",
     re.IGNORECASE,
 )
 
