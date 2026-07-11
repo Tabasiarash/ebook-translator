@@ -27,10 +27,17 @@ class Settings:
     max_concurrent_downloads: int = 3
     cookies_file: str = ""
     bot_poll_interval: int = 5
+    fetch_timeout: int = 45
+    fetch_max_mb: int = 100
+    fetch_per_user_cooldown: int = 30
 
     @property
     def jobs_dir(self) -> Path:
         return self.base_dir / "jobs"
+
+    @property
+    def fetch_max_bytes(self) -> int:
+        return self.fetch_max_mb * 1024 * 1024
 
 
 def settings() -> Settings:
@@ -51,6 +58,9 @@ def settings() -> Settings:
         max_concurrent_downloads=int(os.getenv("MAX_CONCURRENT_DOWNLOADS", "3")),
         cookies_file=os.getenv("COOKIES_FILE", ""),
         bot_poll_interval=int(os.getenv("BOT_POLL_INTERVAL", "5")),
+        fetch_timeout=int(os.getenv("FETCH_TIMEOUT_SECONDS", "45")),
+        fetch_max_mb=int(os.getenv("FETCH_MAX_MB", "100")),
+        fetch_per_user_cooldown=int(os.getenv("FETCH_PER_USER_COOLDOWN_SECONDS", "30")),
     )
 
 

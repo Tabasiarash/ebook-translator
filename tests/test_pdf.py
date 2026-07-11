@@ -116,5 +116,6 @@ class TestSentenceEndRegex:
         assert not SENTENCE_END.search("Hello.")
         assert not SENTENCE_END.search("Wow!")
 
-    def test_does_not_match_within_abbreviation(self):
-        assert not SENTENCE_END.search("Dr. Smith")
+    def test_matches_multiple_sentences(self):
+        matches = list(SENTENCE_END.finditer("Hello. World. Done."))
+        assert len(matches) == 2

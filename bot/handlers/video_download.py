@@ -19,23 +19,38 @@ log = logging.getLogger("download_handler")
 URL_PATTERN = re.compile(
     r"(https?://)?"
     r"(www\.)?"
-    r"(youtube\.com|youtu\.be|instagram\.com|twitter\.com|x\.com)"
-    r"/(watch\?v=|embed/|v/|shorts/|reel/|p/|tv/|stories/|[\w-]+/status/)?"
+    r"(youtube\.com|youtu\.be|instagram\.com|twitter\.com|x\.com|"
+    r"facebook\.com|fb\.watch|tiktok\.com|linkedin\.com|snapchat\.com)"
+    r"/(watch\?v=|embed/|v/|shorts/|reel/|p/|tv/|stories/|[\w-]+/status/|[\w-]+/video/|[\w-]+/reel/|[\w-]+/photo/|[\w-]+)?"
     r"[\w&?=%-]+",
     re.IGNORECASE,
 )
 
-SUPPORTED_DOMAINS = {"youtube.com", "youtu.be", "instagram.com", "twitter.com", "x.com"}
+SUPPORTED_DOMAINS = {
+    "youtube.com", "youtu.be",
+    "instagram.com",
+    "twitter.com", "x.com",
+    "facebook.com", "fb.watch",
+    "tiktok.com",
+    "linkedin.com",
+    "snapchat.com",
+}
+
+FACEBOOK_DOMAINS = {"facebook.com", "fb.watch"}
+TIKTOK_DOMAINS = {"tiktok.com"}
+LINKEDIN_DOMAINS = {"linkedin.com"}
+SNAPCHAT_DOMAINS = {"snapchat.com"}
 
 
-def get_engine_for_url(url: str) -> str:
-    domain = urlparse(url).netloc.replace("www.", "")
+def get_domain_engine(domain: str) -> str:
     if domain in ("youtube.com", "youtu.be"):
         return "yt-dlp"
     if domain in ("instagram.com",):
         return "gallery-dl"
     if domain in ("twitter.com", "x.com"):
         return "twitter"
+    if domain in FACEBOOK_DOMAINS | TIKTOK_DOMAINS | LINKEDIN_DOMAINS | SNAPCHAT_DOMAINS:
+        return "yt-dlp"
     return "unsupported"
 
 
@@ -57,7 +72,8 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
     domain = urlparse(url).netloc.replace("www.", "")
     if domain not in SUPPORTED_DOMAINS:
         await update.message.reply_text(
-            "This link is not supported yet. Currently supported: YouTube, Instagram, Twitter/X."
+            "This link is not supported yet. Supported: YouTube, Instagram, Twitter/X, "
+            "Facebook, TikTok, LinkedIn, Snapchat."
         )
         return
 
@@ -72,7 +88,7 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         )
         return
 
-    engine = get_engine_for_url(url)
+    engine = get_domain_engine(domain)
 
     if engine in ("gallery-dl", "twitter"):
         # Instagram/Twitter: skip probe/quality picker, enqueue directly
@@ -117,6 +133,7 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
 
     context.user_data["download_url"] = url
     context.user_data["download_info"] = info
+    context.user_data["download_engine"] = engine
 
     buttons = []
 
@@ -179,6 +196,8 @@ async def handle_dl_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
     await query.edit_message_text("⏳ Queuing download...")
 
+    engine = context.user_data.get("download_engine", "yt-dlp")
+
     r = await connect(cfg.redis_url)
     await r.xadd(
         "download:pending",
@@ -187,7 +206,7 @@ async def handle_dl_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
             "user_id": user_id,
             "url": url,
             "quality": data,
-            "engine": "yt-dlp",
+            "engine": engine,
         },
     )
 

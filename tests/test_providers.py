@@ -5,6 +5,7 @@ import time
 from pathlib import Path
 
 import pytest
+import pytest_asyncio
 
 from ebook_translator.config import COOLDOWN_ZSET
 from ebook_translator.providers import (
@@ -65,67 +66,54 @@ class TestProviderKey:
         assert k1.identity != k2.identity
 
 
-class TestPickAvailable:
-    async def test_returns_first_available(self, redis_url, mock_providers_yaml):
-        from ebook_translator.queue import connect
+@pytest_asyncio.fixture
+async def clean_cooldowns(redis_conn):
+    await redis_conn.delete(COOLDOWN_ZSET)
 
-        r = await connect(redis_url)
+
+class TestPickAvailable:
+    async def test_returns_first_available(self, clean_cooldowns, redis_conn, mock_providers_yaml):
         keys = load_provider_keys(mock_providers_yaml)
-        picked = await pick_available(r, keys)
+        picked = await pick_available(redis_conn, keys)
         assert picked is not None
         assert picked.name == "gemini"
 
-    async def test_skips_cooldown_keys(self, redis_url, mock_providers_yaml):
-        from ebook_translator.queue import connect
-
-        r = await connect(redis_url)
+    async def test_skips_cooldown_keys(self, clean_cooldowns, redis_conn, mock_providers_yaml):
         keys = load_provider_keys(mock_providers_yaml)
         gemini = [k for k in keys if k.name == "gemini"][0]
-        await mark_cooldown(r, gemini, 300)
-        picked = await pick_available(r, keys)
+        await mark_cooldown(redis_conn, gemini, 300)
+        picked = await pick_available(redis_conn, keys)
         assert picked is not None
         assert picked.name == "groq"
 
-    async def test_returns_none_when_all_cooldown(self, redis_url, mock_providers_yaml):
-        from ebook_translator.queue import connect
-
-        r = await connect(redis_url)
+    async def test_returns_none_when_all_cooldown(self, clean_cooldowns, redis_conn, mock_providers_yaml):
         keys = load_provider_keys(mock_providers_yaml)
         for k in keys:
-            await mark_cooldown(r, k, 300)
-        picked = await pick_available(r, keys)
+            await mark_cooldown(redis_conn, k, 300)
+        picked = await pick_available(redis_conn, keys)
         assert picked is None
 
 
 class TestMarkCooldown:
-    async def test_sets_cooldown(self, redis_url, mock_providers_yaml):
-        from ebook_translator.queue import connect
-
-        r = await connect(redis_url)
+    async def test_sets_cooldown(self, clean_cooldowns, redis_conn, mock_providers_yaml):
         keys = load_provider_keys(mock_providers_yaml)
         key = keys[0]
-        await mark_cooldown(r, key, 60)
-        score = await r.zscore(COOLDOWN_ZSET, key.identity)
+        await mark_cooldown(redis_conn, key, 60)
+        score = await redis_conn.zscore(COOLDOWN_ZSET, key.identity)
         assert score is not None
         assert int(score) >= int(time.time()) + 59
 
 
 class TestEffectiveRPM:
-    async def test_all_keys_contributor(self, redis_url, mock_providers_yaml):
-        from ebook_translator.queue import connect
-
-        r = await connect(redis_url)
+    async def test_all_keys_contributor(self, clean_cooldowns, redis_conn, mock_providers_yaml):
         keys = load_provider_keys(mock_providers_yaml)
-        rpm = await effective_rpm(r, keys)
+        rpm = await effective_rpm(redis_conn, keys)
         total_expected = sum(k.rpm_limit for k in keys)
         assert rpm == total_expected
 
-    async def test_cooldown_reduces_rpm(self, redis_url, mock_providers_yaml):
-        from ebook_translator.queue import connect
-
-        r = await connect(redis_url)
+    async def test_cooldown_reduces_rpm(self, clean_cooldowns, redis_conn, mock_providers_yaml):
         keys = load_provider_keys(mock_providers_yaml)
         for k in keys:
-            await mark_cooldown(r, k, 300)
-        rpm = await effective_rpm(r, keys)
+            await mark_cooldown(redis_conn, k, 300)
+        rpm = await effective_rpm(redis_conn, keys)
         assert rpm == 1  # min 1

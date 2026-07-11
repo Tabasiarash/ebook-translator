@@ -22,6 +22,7 @@ from ebook_translator.tts import generate_audiobook
 
 from bot.handlers.video_download import HANDLERS as DL_HANDLERS
 from bot.handlers.cookie_login import HANDLERS as COOKIE_HANDLERS
+from bot.handlers.fetch import HANDLERS as FETCH_HANDLERS
 
 
 cfg = settings()
@@ -560,6 +561,9 @@ def main() -> None:
         if isinstance(h, (CommandHandler, CallbackQueryHandler)):
             app.add_handler(h)
     for h in COOKIE_HANDLERS:
+        if isinstance(h, (CommandHandler, CallbackQueryHandler)):
+            app.add_handler(h)
+    for h in FETCH_HANDLERS:
         if isinstance(h, (CommandHandler, CallbackQueryHandler)):
             app.add_handler(h)
     app.run_polling()

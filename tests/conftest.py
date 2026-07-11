@@ -71,6 +71,17 @@ def redis_url() -> str:
     return cfg.redis_url
 
 
+@pytest_asyncio.fixture
+async def redis_conn(redis_url):
+    from ebook_translator.queue import connect
+
+    r = await connect(redis_url)
+    try:
+        yield r
+    finally:
+        await r.aclose()
+
+
 @pytest.fixture
 def mock_providers_yaml(tmp_path: Path) -> Path:
     data = {
