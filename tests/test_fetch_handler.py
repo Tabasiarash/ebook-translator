@@ -50,7 +50,6 @@ class TestIsUnsafeIp:
         assert _is_unsafe_ip("nonexistent.invalid")
 
     def test_cidr_ranges_match_expected(self):
-        import ipaddress
         samples = {
             "127.0.0.0/8": "127.0.0.1",
             "10.0.0.0/8": "10.0.0.1",
