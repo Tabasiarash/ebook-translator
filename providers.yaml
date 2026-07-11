@@ -1,0 +1,16 @@
+providers:
+- keys_env: GEMINI_API_KEYS
+  model: gemini-2.0-flash
+  name: gemini
+  priority: 1
+  rpm_limit: 15
+- keys_env: GROQ_API_KEYS
+  model: llama-3.3-70b-versatile
+  name: groq
+  priority: 2
+  rpm_limit: 30
+- keys_env: OPENROUTER_API_KEYS
+  model: mistralai/mistral-small-3.1-24b-instruct:free
+  name: openrouter
+  priority: 3
+  rpm_limit: 20

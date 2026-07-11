@@ -1,2 +1,0 @@
-{"time":"2026-07-08 17:29:00,212","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
-/root/ebook-translator/venv/bin/python3: can't open file '/root/reassemble_worker.py': [Errno 2] No such file or directory
