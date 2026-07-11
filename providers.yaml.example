@@ -1,0 +1,8 @@
+providers:
+  - name: openrouter
+    keys_env: OPENROUTER_API_KEYS
+    auto_free_models: true
+    models:
+      - openrouter/free
+    rpm_limit: 20
+    priority: 1

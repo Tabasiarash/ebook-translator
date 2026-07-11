@@ -1,0 +1,2 @@
+{"time":"2026-07-08 17:28:59,557","level":"INFO","component":"ebook-translate","msg":"translate worker started"}
+/root/ebook-translator/venv/bin/python3: can't open file '/root/translate_worker.py': [Errno 2] No such file or directory

@@ -1,0 +1,35 @@
+{"time":"2026-07-08 17:29:00,212","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:43:23,436","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:43:55,587","level":"INFO","component":"ebook-reassemble","msg":"job=e2e_test reassembled final=/root/ebook-translator/jobs/e2e_test/translated_German.pdf"}
+{"time":"2026-07-08 17:51:07,768","level":"ERROR","component":"ebook-reassemble","msg":"job=072b19e795234673 reassemble failed: 'chunk_id'"}
+Traceback (most recent call last):
+  File "/root/ebook-translator/reassemble_worker.py", line 64, in main
+    final_path, fallback_pages = render_final(job_dir, job["target_lang"], cfg.font_dir)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/ebook-translator/ebook_translator/render.py", line 131, in render_final
+    return render_mode_b_weasyprint(job_dir, profile, translations, target_language, font_dir), 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/ebook-translator/ebook_translator/render.py", line 220, in render_mode_b_weasyprint
+    html_content = _build_html(profile, translations, target_language, image_data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/ebook-translator/ebook_translator/render.py", line 375, in _build_html
+    by_page[page_id].sort(key=lambda x: x["chunk_id"])
+  File "/root/ebook-translator/ebook_translator/render.py", line 375, in <lambda>
+    by_page[page_id].sort(key=lambda x: x["chunk_id"])
+                                        ~^^^^^^^^^^^^
+KeyError: 'chunk_id'
+{"time":"2026-07-08 17:52:45,743","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:55:04,606","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:56:45,654","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:56:52,378","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:57:56,960","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:59:31,224","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 17:59:45,208","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 18:24:25,948","level":"INFO","component":"ebook-reassemble","msg":"job=7439d92346884e08 reassembled final=/root/ebook-translator/jobs/7439d92346884e08/translated_Farsi.pdf"}
+{"time":"2026-07-08 19:01:02,201","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 19:05:22,041","level":"INFO","component":"ebook-reassemble","msg":"reassemble worker started"}
+{"time":"2026-07-08 20:14:36,193","level":"INFO","component":"ebook-reassemble","msg":"job=e2e_spanish reassembled final=/root/ebook-translator/jobs/e2e_spanish/translated_Spanish.pdf"}
+{"time":"2026-07-08 20:18:24,097","level":"INFO","component":"ebook-reassemble","msg":"job=e2e_french reassembled final=/root/ebook-translator/jobs/e2e_french/translated_French.pdf"}
+{"time":"2026-07-08 23:21:37,442","level":"INFO","component":"ebook-reassemble","msg":"job=f62b097374ae4e76 reassembled final=/root/ebook-translator/jobs/f62b097374ae4e76/translated_Farsi.pdf"}
+{"time":"2026-07-09 09:28:04,389","level":"INFO","component":"ebook-reassemble","msg":"job=progress_test42 reassembled final=/root/ebook-translator/jobs/progress_test42/translated_German.pdf"}
+{"time":"2026-07-09 22:37:21,491","level":"INFO","component":"ebook-reassemble","msg":"job=b9161eaf0e504dff reassembled final=/root/ebook-translator/jobs/b9161eaf0e504dff/translated_Farsi.pdf"}

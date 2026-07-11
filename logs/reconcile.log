@@ -1,0 +1,2 @@
+{"time":"2026-07-08 17:28:59,372","level":"INFO","component":"ebook-reconcile","msg":"reconciliation loop started"}
+/root/ebook-translator/venv/bin/python3: can't open file '/root/reconcile_worker.py': [Errno 2] No such file or directory

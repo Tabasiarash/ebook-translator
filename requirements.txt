@@ -1,0 +1,13 @@
+aiohttp==3.10.11
+aiosqlite==0.20.0
+python-dotenv==1.0.1
+python-telegram-bot==21.7
+PyMuPDF==1.24.14
+redis==5.2.0
+PyYAML==6.0.2
+yt-dlp>=2026.7.4
+reportlab==4.2.5
+weasyprint>=69.0
+python-bidi>=0.6.0
+edge-tts>=6.1.0
+

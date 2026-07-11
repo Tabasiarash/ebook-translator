@@ -1,0 +1,8 @@
+.env
+providers.yaml
+venv/
+__pycache__/
+*.pyc
+jobs/
+db.sqlite3
+

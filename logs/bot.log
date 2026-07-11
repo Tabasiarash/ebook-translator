@@ -1,0 +1,11 @@
+/root/ebook-translator/bot.py:174: PTBUserWarning: Tasks created via `Application.create_task` while the application is not running won't be automatically awaited!
+  app.create_task(done_listener(app))
+/root/ebook-translator/bot.py:175: PTBUserWarning: Tasks created via `Application.create_task` while the application is not running won't be automatically awaited!
+  app.create_task(periodic_pings(app))
+Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<Application.__create_task_callback() done, defined at /root/ebook-translator/venv/lib/python3.12/site-packages/telegram/ext/_application.py:1172> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Task exception was never retrieved
+future: <Task finished name='Task-13' coro=<<async_generator_athrow without __name__>()> exception=RuntimeError('aclose(): asynchronous generator is already running')>
+RuntimeError: aclose(): asynchronous generator is already running
+Task was destroyed but it is pending!
+task: <Task pending name='Task-6' coro=<Application.__create_task_callback() running at /root/ebook-translator/venv/lib/python3.12/site-packages/telegram/ext/_application.py:1191> wait_for=<Future pending cb=[Task.task_wakeup()]>>

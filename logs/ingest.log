@@ -1,0 +1,9 @@
+{"time":"2026-07-08 17:38:41,221","level":"INFO","component":"ebook-ingest","msg":"ingest worker started"}
+{"time":"2026-07-08 17:43:52,856","level":"WARNING","component":"ebook-ingest","msg":"glossary rate limited gemini:gemini-2.0-flash:sNJVfCWg: 60s"}
+{"time":"2026-07-08 17:43:53,205","level":"INFO","component":"ebook-ingest","msg":"job=e2e_test glossary extracted 4 terms"}
+{"time":"2026-07-08 17:43:53,624","level":"INFO","component":"ebook-ingest","msg":"job=e2e_test glossary translated 4 terms"}
+{"time":"2026-07-08 17:43:53,633","level":"INFO","component":"ebook-ingest","msg":"job=e2e_test extracted chunks=10"}
+{"time":"2026-07-08 19:01:10,940","level":"WARNING","component":"ebook-ingest","msg":"glossary rate limited gemini:gemini-2.0-flash:sNJVfCWg: 60s"}
+{"time":"2026-07-08 19:01:11,352","level":"INFO","component":"ebook-ingest","msg":"job=e2e_french glossary extracted 4 terms"}
+{"time":"2026-07-08 19:01:11,739","level":"INFO","component":"ebook-ingest","msg":"job=e2e_french glossary translated 4 terms"}
+{"time":"2026-07-08 19:01:11,760","level":"INFO","component":"ebook-ingest","msg":"job=e2e_french extracted chunks=10"}

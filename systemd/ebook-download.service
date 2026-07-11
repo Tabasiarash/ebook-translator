@@ -1,0 +1,15 @@
+[Unit]
+Description=Ebook Translator Video Download Worker
+After=network-online.target redis.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/ebook-translator
+EnvironmentFile=/root/ebook-translator/.env
+ExecStart=/root/ebook-translator/venv/bin/python -m bot.workers.download_worker
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

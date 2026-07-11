@@ -1,0 +1,16 @@
+[Unit]
+Description=PDF Ebook Translator Reassemble Worker
+After=network-online.target redis.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/ebook-translator
+EnvironmentFile=/var/www/ebook-translator/.env
+ExecStart=/var/www/ebook-translator/venv/bin/python /var/www/ebook-translator/reassemble_worker.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

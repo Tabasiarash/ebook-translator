@@ -1,0 +1,22 @@
+[Unit]
+Description=Telegram Bot API Server (local)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/telegram-bot-api \
+  --local \
+  --http-port 8082 \
+  --http-ip-address 127.0.0.1 \
+  --dir /var/lib/telegram-bot-api \
+  --max-webhook-connections 100 \
+  --api-id=33282119 \
+  --api-hash=c24cf53f30908e78cbaf76dd67214ac7
+Restart=always
+RestartSec=5
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
