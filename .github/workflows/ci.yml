@@ -33,10 +33,17 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-asyncio
 
+      - name: Download test fonts
+        run: |
+          mkdir -p fonts
+          curl -sL -o fonts/NotoSans-Regular.ttf "https://github.com/google/fonts/raw/main/ofl/notosans/NotoSans%5Bwdth,wght%5D.ttf" || true
+          if [ ! -f fonts/NotoSans-Regular.ttf ] || [ ! -s fonts/NotoSans-Regular.ttf ]; then
+            curl -sL -o fonts/NotoSans-Regular.ttf "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf" || true
+          fi
+          ls -la fonts/
+
       - name: Generate test fixtures
         run: python scripts/generate_test_pdf.py
 
       - name: Run tests
         run: python -m pytest tests/ -v
-        env:
-          REDIS_URL: redis://localhost:6379/0

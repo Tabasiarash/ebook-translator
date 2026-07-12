@@ -21,7 +21,7 @@ from ebook_translator.render import (
     render_final,
 )
 
-FONT_DIR = Path("/root/ebook-translator/fonts")
+FONT_DIR = Path(__file__).resolve().parent.parent / "fonts"
 
 
 class TestModeFor:
