@@ -1,5 +1,7 @@
 # ebook-translator
 
+[![CI](https://github.com/Tabasiarash/ebook-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/Tabasiarash/ebook-translator/actions/workflows/ci.yml)
+
 PDF ebook translator Telegram bot that translates large books via rotating free-tier LLM pools, preserves visual layout, and downloads video/media from YouTube, Instagram, Twitter/X, Facebook, TikTok, LinkedIn, and Snapchat — plus generic URL relay and audiobook TTS generation.
 
 ## Status
